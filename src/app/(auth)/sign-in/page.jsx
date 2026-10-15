@@ -1,5 +1,5 @@
 "use client";
-
+import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { signIn } from "@/app/lib/auth-client";
 import { Check } from "@gravity-ui/icons";
 import {
@@ -8,17 +8,21 @@ import {
   FieldError,
   Form,
   Input,
+  InputGroup,
   Label,
   TextField,
 } from "@heroui/react";
+import { useState } from "react";
 
 export default function Basic() {
+  const [isVisible, setIsVisible] = useState(false);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    const {data:resData, error} = await signIn.email({
+    const { data: resData, error } = await signIn.email({
       email: data.email,
       password: data.password,
       rememberMe: true,
@@ -49,8 +53,8 @@ export default function Basic() {
         <FieldError />
       </TextField>
 
-      <TextField
-        isRequired
+      <TextField className="w-full max-w-[280px]" 
+       isRequired
         minLength={8}
         name="password"
         type="password"
@@ -68,8 +72,30 @@ export default function Basic() {
           return null;
         }}
       >
+        
         <Label>Password</Label>
-        <Input placeholder="Enter your password" />
+        <InputGroup>
+          <InputGroup.Input
+            className="w-full max-w-[280px]"
+            type={isVisible ? "text" : "password"}
+            placeholder="Enter your password"           
+          />
+          <InputGroup.Suffix className="pe-0">
+            <Button
+              isIconOnly
+              aria-label={isVisible ? "Hide password" : "Show password"}
+              size="sm"
+              variant="ghost"
+              onPress={() => setIsVisible(!isVisible)}
+            >
+              {isVisible ? (
+                <Eye className="size-4" />
+              ) : (
+                <EyeSlash className="size-4" />
+              )}
+            </Button>
+          </InputGroup.Suffix>
+        </InputGroup>
         <FieldError />
       </TextField>
 
