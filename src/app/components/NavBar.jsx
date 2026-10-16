@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { Link, Button, Spinner } from "@heroui/react";
 import { signOut, useSession } from "../lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = useSession();
+  const router = useRouter();
 
   if (isPending) {
     return(
@@ -36,7 +38,10 @@ export default function NavBar() {
       {session?.user ? (
         <>
           <span>Welcome! {session.user.name}</span>
-          <Button variant="primary" onClick={() => signOut()}>
+          <Button variant="primary" onClick={async () =>{
+              await signOut();
+              router.push("/sign-in");
+              }}>
             Sign Out
           </Button>
         </>
