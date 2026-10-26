@@ -13,6 +13,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Basic() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +27,7 @@ export default function Basic() {
       email: data.email,
       password: data.password,
       rememberMe: true,
-      callbackURL: "/",
+      callbackURL: "/dashboard",
     });
 
     console.log("Form data:", resData, error);
@@ -35,6 +36,8 @@ export default function Basic() {
   };
 
   return (
+    <div>
+
     <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
       <TextField
         isRequired
@@ -109,5 +112,10 @@ export default function Basic() {
         </Button>
       </div>
     </Form>
+    <div className="mt-4">
+      <p>Forgot your password? <Link className="text-blue-500 hover:underline" href="/forgot-password">Click here</Link></p>
+    </div>
+    </div>
+    
   );
 }

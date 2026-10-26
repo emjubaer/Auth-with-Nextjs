@@ -32,6 +32,7 @@ export default function Basic() {
       name: data.name,
       email: data.email,
       password: data.password,
+      callbackURL: "/sign-in",
     });
 
     console.log(resData, error);
